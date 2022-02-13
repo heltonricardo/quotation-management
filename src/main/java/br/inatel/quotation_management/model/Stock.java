@@ -27,6 +27,6 @@ public class Stock {
     @Column(unique = true)
     private String stockId;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Quote> quotes;
 }

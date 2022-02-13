@@ -14,7 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StockService {
 
-    private final StockRepository quoteRepository;
+    private final StockRepository stockRepository;
     private final ManagerService managerService;
 
     public void create(Stock stock) throws QMException {
@@ -27,23 +27,23 @@ public class StockService {
         }
 
         boolean stockAlreadyExists =
-                quoteRepository.findById(stock.getId()).isPresent()
+                stockRepository.findById(stock.getId()).isPresent()
                 || findByStockId(stock.getStockId()).isPresent();
 
         if (stockAlreadyExists) {
             throw new AlreadyExistsException();
         }
 
-        quoteRepository.save(stock);
+        stockRepository.save(stock);
     }
 
     public Optional<Stock> findByStockId(String stockId) {
 
-        return quoteRepository.findByStockId(stockId);
+        return stockRepository.findByStockId(stockId);
     }
 
     public Iterable<Stock> findAll() {
 
-        return quoteRepository.findAll();
+        return stockRepository.findAll();
     }
 }
