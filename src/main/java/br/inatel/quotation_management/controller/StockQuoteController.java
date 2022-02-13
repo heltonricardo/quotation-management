@@ -1,11 +1,11 @@
 package br.inatel.quotation_management.controller;
 
-import br.inatel.quotation_management.dto.StockRequestDTO;
+import br.inatel.quotation_management.dto.StockQuoteRequestDTO;
 import br.inatel.quotation_management.exception.AlreadyExistsException;
 import br.inatel.quotation_management.exception.NotAllowedException;
 import br.inatel.quotation_management.exception.QMException;
-import br.inatel.quotation_management.model.Stock;
-import br.inatel.quotation_management.service.StockService;
+import br.inatel.quotation_management.model.StockQuote;
+import br.inatel.quotation_management.service.StockQuoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,21 +20,21 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/stock")
-public class StockController {
+@RequestMapping("/stock-quote")
+public class StockQuoteController {
 
-    private final StockService stockService;
+    private final StockQuoteService stockQuoteService;
 
     @PostMapping
-    public ResponseEntity<Stock> create(
-            @RequestBody StockRequestDTO stockRequestDTO) {
+    public ResponseEntity<StockQuote> create(
+            @RequestBody StockQuoteRequestDTO stockQuoteRequestDTO) {
 
-        Stock stockRequest = stockRequestDTO.toObj();
+        StockQuote stockQuoteRequest = stockQuoteRequestDTO.toObj();
 
         HttpStatus responseCode = HttpStatus.CREATED;
 
         try {
-            stockService.create(stockRequest);
+            stockQuoteService.create(stockQuoteRequest);
         } catch (NotAllowedException e) {
             System.out.println(e.getMessage());
             responseCode = HttpStatus.NOT_ACCEPTABLE;
@@ -48,11 +48,12 @@ public class StockController {
         return new ResponseEntity<>(responseCode);
     }
 
-    @GetMapping("/{stockId}")
-    public ResponseEntity<Optional<Stock>> findByStockId(
-            @PathVariable String stockId) {
+    @GetMapping("/{stockQuoteId}")
+    public ResponseEntity<Optional<StockQuote>> findByStockQuoteId(
+            @PathVariable String stockQuoteId) {
 
-        Optional<Stock> responseBody = stockService.findByStockId(stockId);
+        Optional<StockQuote> responseBody =
+                stockQuoteService.findByStockQuoteId(stockQuoteId);
 
         if (responseBody.isPresent()) {
             return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -62,9 +63,9 @@ public class StockController {
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<Stock>> findAll() {
+    public ResponseEntity<Iterable<StockQuote>> findAll() {
 
-        Iterable<Stock> responseBody = stockService.findAll();
+        Iterable<StockQuote> responseBody = stockQuoteService.findAll();
 
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }

@@ -1,7 +1,7 @@
 package br.inatel.quotation_management.dto;
 
 import br.inatel.quotation_management.model.Quote;
-import br.inatel.quotation_management.model.Stock;
+import br.inatel.quotation_management.model.StockQuote;
 import lombok.Getter;
 
 import java.util.Date;
@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 @Getter
-public class StockRequestDTO {
+public class StockQuoteRequestDTO {
 
     String id;
-    String stockId;
+    String stockQuoteId;
     Map<Date, Double> quotes;
 
-    public Stock toObj() {
+    public StockQuote toObj() {
 
         List<Quote> quoteList = quotes
                 .entrySet()
@@ -23,9 +23,9 @@ public class StockRequestDTO {
                 .map(QuoteRequestDTO::toObj)
                 .toList();
 
-        return Stock.builder()
+        return StockQuote.builder()
                 .id(id)
-                .stockId(stockId)
+                .stockQuoteId(stockQuoteId)
                 .quotes(quoteList)
                 .build();
     }

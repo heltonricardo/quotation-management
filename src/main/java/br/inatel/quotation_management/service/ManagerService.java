@@ -14,7 +14,7 @@ public class ManagerService {
 
     public void create(Manager manager) throws AlreadyExistsException {
 
-        boolean managerAlreadyExists = existsByStockId(manager.getId());
+        boolean managerAlreadyExists = existsByStockQuoteId(manager.getId());
 
         if (managerAlreadyExists) {
             throw new AlreadyExistsException();
@@ -28,13 +28,13 @@ public class ManagerService {
         return managerRepository.findAll();
     }
 
-    public boolean existsByStockId(String stockId) {
+    public boolean existsByStockQuoteId(String stockQuoteId) {
 
-        return managerRepository.existsById(stockId);
+        return managerRepository.existsById(stockQuoteId);
     }
 
-    public boolean notExistsByStockId(String stockId) {
+    public boolean notExistsByStockQuoteId(String stockQuoteId) {
 
-        return !existsByStockId(stockId);
+        return !existsByStockQuoteId(stockQuoteId);
     }
 }

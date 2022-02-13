@@ -19,13 +19,13 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Stock {
+public class StockQuote {
 
     @Id
     private String id;
 
     @Column(unique = true)
-    private String stockId;
+    private String stockQuoteId;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Quote> quotes;

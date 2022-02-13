@@ -20,7 +20,7 @@ public class DataLoader implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
 
-        List<Manager> stocks = Arrays.asList(
+        List<Manager> stockQuotes = Arrays.asList(
                 Manager.builder()
                         .id("petr3")
                         .description("test petr")
@@ -31,7 +31,7 @@ public class DataLoader implements ApplicationRunner {
                         .build()
         );
 
-        stocks.forEach(s -> {
+        stockQuotes.forEach(s -> {
             try {
                 managerService.create(s);
             } catch (QMException ignored) {
