@@ -28,7 +28,7 @@ public class StockQuoteService {
 
         boolean stockQuoteAlreadyExists =
                 stockQuoteRepository.findById(stockQuote.getId()).isPresent()
-                || findByStockQuoteId(stockQuote.getStockId()).isPresent();
+                || findByStockId(stockQuote.getStockId()).isPresent();
 
         if (stockQuoteAlreadyExists) {
             throw new AlreadyExistsException();
@@ -37,9 +37,9 @@ public class StockQuoteService {
         stockQuoteRepository.save(stockQuote);
     }
 
-    public Optional<StockQuote> findByStockQuoteId(String stockQuoteId) {
+    public Optional<StockQuote> findByStockId(String stockId) {
 
-        return stockQuoteRepository.findByStockId(stockQuoteId);
+        return stockQuoteRepository.findByStockId(stockId);
     }
 
     public Iterable<StockQuote> findAll() {
