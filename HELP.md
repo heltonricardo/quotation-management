@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'br.inatel.quotation-management' is invalid and this project uses 'br.inatel.quotationmanagement' instead.
+* The original package name 'br.inatel.quotation-management' is invalid and this project uses 'br.inatel.quotation_management' instead.
 
 # Getting Started
 
