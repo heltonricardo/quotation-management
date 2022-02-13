@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface StockQuoteRepository
         extends CrudRepository<StockQuote, String> {
 
-    Optional<StockQuote> findByStockQuoteId(String stockQuoteId);
+    Optional<StockQuote> findByStockId(String stockId);
 }

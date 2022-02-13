@@ -48,12 +48,12 @@ public class StockQuoteController {
         return new ResponseEntity<>(responseCode);
     }
 
-    @GetMapping("/{stockQuoteId}")
-    public ResponseEntity<Optional<StockQuote>> findByStockQuoteId(
-            @PathVariable String stockQuoteId) {
+    @GetMapping("/{stockId}")
+    public ResponseEntity<Optional<StockQuote>> findByStockId(
+            @PathVariable String stockId) {
 
         Optional<StockQuote> responseBody =
-                stockQuoteService.findByStockQuoteId(stockQuoteId);
+                stockQuoteService.findByStockQuoteId(stockId);
 
         if (responseBody.isPresent()) {
             return new ResponseEntity<>(responseBody, HttpStatus.OK);

@@ -15,12 +15,12 @@ import java.util.Optional;
 public class StockQuoteService {
 
     private final StockQuoteRepository stockQuoteRepository;
-    private final StockManagerService managerService;
+    private final StockManagerService stockManagerService;
 
     public void create(StockQuote stockQuote) throws QMException {
 
-        boolean notAllowed =
-                managerService.notExistsByStockQuoteId(stockQuote.getStockQuoteId());
+        boolean notAllowed = stockManagerService
+                        .notExistsByStockQuoteId(stockQuote.getStockId());
 
         if (notAllowed) {
             throw new NotAllowedException();
@@ -28,7 +28,7 @@ public class StockQuoteService {
 
         boolean stockQuoteAlreadyExists =
                 stockQuoteRepository.findById(stockQuote.getId()).isPresent()
-                || findByStockQuoteId(stockQuote.getStockQuoteId()).isPresent();
+                || findByStockQuoteId(stockQuote.getStockId()).isPresent();
 
         if (stockQuoteAlreadyExists) {
             throw new AlreadyExistsException();
@@ -39,7 +39,7 @@ public class StockQuoteService {
 
     public Optional<StockQuote> findByStockQuoteId(String stockQuoteId) {
 
-        return stockQuoteRepository.findByStockQuoteId(stockQuoteId);
+        return stockQuoteRepository.findByStockId(stockQuoteId);
     }
 
     public Iterable<StockQuote> findAll() {

@@ -12,7 +12,7 @@ import java.util.Map;
 public class StockQuoteRequestDTO {
 
     String id;
-    String stockQuoteId;
+    String stockId;
     Map<Date, Double> quotes;
 
     public StockQuote toObj() {
@@ -25,7 +25,7 @@ public class StockQuoteRequestDTO {
 
         return StockQuote.builder()
                 .id(id)
-                .stockQuoteId(stockQuoteId)
+                .stockId(stockId)
                 .quotes(quoteList)
                 .build();
     }

@@ -14,18 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/manager")
+@RequestMapping("/stock")
 public class StockManagerController {
 
-    private final StockManagerService managerService;
+    private final StockManagerService stockManagerService;
 
     @PostMapping
-    public ResponseEntity<StockManager> create(@RequestBody StockManager manager) {
+    public ResponseEntity<StockManager> create(
+            @RequestBody StockManager manager) {
 
         HttpStatus responseCode = HttpStatus.OK;
 
         try {
-            managerService.create(manager);
+            stockManagerService.create(manager);
         } catch (AlreadyExistsException e) {
             responseCode = HttpStatus.CONFLICT;
             System.out.println(e.getMessage());
@@ -37,7 +38,7 @@ public class StockManagerController {
     @GetMapping
     public ResponseEntity<Iterable<StockManager>> findAll() {
 
-        Iterable<StockManager> responseBody = managerService.findAll();
+        Iterable<StockManager> responseBody = stockManagerService.findAll();
 
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
