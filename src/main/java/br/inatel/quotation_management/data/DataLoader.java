@@ -1,5 +1,6 @@
 package br.inatel.quotation_management.data;
 
+import br.inatel.quotation_management.exception.QMException;
 import br.inatel.quotation_management.model.Manager;
 import br.inatel.quotation_management.service.ManagerService;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +18,9 @@ public class DataLoader implements ApplicationRunner {
     private final ManagerService managerService;
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
 
-        List<Manager> managers = Arrays.asList(
+        List<Manager> stocks = Arrays.asList(
                 Manager.builder()
                         .id("petr3")
                         .description("test petr")
@@ -30,6 +31,11 @@ public class DataLoader implements ApplicationRunner {
                         .build()
         );
 
-        managers.forEach(managerService::create);
+        stocks.forEach(s -> {
+            try {
+                managerService.create(s);
+            } catch (QMException ignored) {
+            }
+        });
     }
 }

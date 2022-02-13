@@ -1,6 +1,9 @@
 package br.inatel.quotation_management.controller;
 
 import br.inatel.quotation_management.dto.StockRequestDTO;
+import br.inatel.quotation_management.exception.AlreadyExistsException;
+import br.inatel.quotation_management.exception.NotAllowedException;
+import br.inatel.quotation_management.exception.QMException;
 import br.inatel.quotation_management.model.Stock;
 import br.inatel.quotation_management.service.StockService;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +31,19 @@ public class StockController {
 
         Stock stockRequest = stockRequestDTO.toObj();
 
-        HttpStatus responseCode = stockService.create(stockRequest).isPresent()
-                ? HttpStatus.CREATED
-                : HttpStatus.CONFLICT;
+        HttpStatus responseCode = HttpStatus.CREATED;
+
+        try {
+            stockService.create(stockRequest);
+        } catch (NotAllowedException e) {
+            System.out.println(e.getMessage());
+            responseCode = HttpStatus.NOT_ACCEPTABLE;
+        } catch (AlreadyExistsException e) {
+            System.out.println(e.getMessage());
+            responseCode = HttpStatus.CONFLICT;
+        } catch (QMException e) {
+            e.printStackTrace();
+        }
 
         return new ResponseEntity<>(responseCode);
     }

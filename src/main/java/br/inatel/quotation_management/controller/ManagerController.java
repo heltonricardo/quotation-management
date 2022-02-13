@@ -1,5 +1,6 @@
 package br.inatel.quotation_management.controller;
 
+import br.inatel.quotation_management.exception.AlreadyExistsException;
 import br.inatel.quotation_management.model.Manager;
 import br.inatel.quotation_management.service.ManagerService;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +22,14 @@ public class ManagerController {
     @PostMapping
     public ResponseEntity<Manager> create(@RequestBody Manager manager) {
 
-        HttpStatus responseCode = managerService.create(manager).isPresent()
-                ? HttpStatus.CREATED
-                : HttpStatus.CONFLICT;
+        HttpStatus responseCode = HttpStatus.OK;
+
+        try {
+            managerService.create(manager);
+        } catch (AlreadyExistsException e) {
+            responseCode = HttpStatus.CONFLICT;
+            System.out.println(e.getMessage());
+        }
 
         return new ResponseEntity<>(responseCode);
     }

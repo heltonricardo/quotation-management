@@ -1,5 +1,8 @@
 package br.inatel.quotation_management.service;
 
+import br.inatel.quotation_management.exception.AlreadyExistsException;
+import br.inatel.quotation_management.exception.NotAllowedException;
+import br.inatel.quotation_management.exception.QMException;
 import br.inatel.quotation_management.model.Stock;
 import br.inatel.quotation_management.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,22 +17,24 @@ public class StockService {
     private final StockRepository quoteRepository;
     private final ManagerService managerService;
 
-    public Optional<Stock> create(Stock stock) {
+    public void create(Stock stock) throws QMException {
 
-        boolean stockNotExists =
-                quoteRepository.findById(stock.getId()).isEmpty()
-                && findByStockId(stock.getStockId()).isEmpty();
+        boolean notAllowed =
+                managerService.notExistsByStockId(stock.getStockId());
 
-        boolean allowedToCreate =
-                managerService.existsByStockId(stock.getStockId());
-
-        Optional<Stock> response = Optional.empty();
-
-        if (stockNotExists && allowedToCreate) {
-            response = Optional.of(quoteRepository.save(stock));
+        if (notAllowed) {
+            throw new NotAllowedException();
         }
 
-        return response;
+        boolean stockAlreadyExists =
+                quoteRepository.findById(stock.getId()).isPresent()
+                || findByStockId(stock.getStockId()).isPresent();
+
+        if (stockAlreadyExists) {
+            throw new AlreadyExistsException();
+        }
+
+        quoteRepository.save(stock);
     }
 
     public Optional<Stock> findByStockId(String stockId) {

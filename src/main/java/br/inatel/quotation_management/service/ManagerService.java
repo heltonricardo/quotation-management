@@ -1,39 +1,40 @@
 package br.inatel.quotation_management.service;
 
+import br.inatel.quotation_management.exception.AlreadyExistsException;
 import br.inatel.quotation_management.model.Manager;
 import br.inatel.quotation_management.repository.ManagerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class ManagerService {
 
-    private final ManagerRepository quoteRepository;
+    private final ManagerRepository managerRepository;
 
-    public Optional<Manager> create(Manager manager) {
+    public void create(Manager manager) throws AlreadyExistsException {
 
-        boolean managerNotExists =
-                quoteRepository.findById(manager.getId()).isEmpty();
+        boolean managerAlreadyExists = existsByStockId(manager.getId());
 
-        Optional<Manager> response = Optional.empty();
-
-        if (managerNotExists) {
-            response = Optional.of(quoteRepository.save(manager));
+        if (managerAlreadyExists) {
+            throw new AlreadyExistsException();
         }
 
-        return response;
+        managerRepository.save(manager);
     }
 
     public Iterable<Manager> findAll() {
 
-        return quoteRepository.findAll();
+        return managerRepository.findAll();
     }
 
     public boolean existsByStockId(String stockId) {
-        
-        return quoteRepository.existsById(stockId);
+
+        return managerRepository.existsById(stockId);
+    }
+
+    public boolean notExistsByStockId(String stockId) {
+
+        return !existsByStockId(stockId);
     }
 }
