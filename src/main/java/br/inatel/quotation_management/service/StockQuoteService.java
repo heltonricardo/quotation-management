@@ -15,7 +15,7 @@ import java.util.Optional;
 public class StockQuoteService {
 
     private final StockQuoteRepository stockQuoteRepository;
-    private final ManagerService managerService;
+    private final StockManagerService managerService;
 
     public void create(StockQuote stockQuote) throws QMException {
 

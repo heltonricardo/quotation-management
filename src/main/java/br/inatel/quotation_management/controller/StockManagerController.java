@@ -1,8 +1,8 @@
 package br.inatel.quotation_management.controller;
 
 import br.inatel.quotation_management.exception.AlreadyExistsException;
-import br.inatel.quotation_management.model.Manager;
-import br.inatel.quotation_management.service.ManagerService;
+import br.inatel.quotation_management.model.StockManager;
+import br.inatel.quotation_management.service.StockManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/manager")
-public class ManagerController {
+public class StockManagerController {
 
-    private final ManagerService managerService;
+    private final StockManagerService managerService;
 
     @PostMapping
-    public ResponseEntity<Manager> create(@RequestBody Manager manager) {
+    public ResponseEntity<StockManager> create(@RequestBody StockManager manager) {
 
         HttpStatus responseCode = HttpStatus.OK;
 
@@ -35,9 +35,9 @@ public class ManagerController {
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<Manager>> findAll() {
+    public ResponseEntity<Iterable<StockManager>> findAll() {
 
-        Iterable<Manager> responseBody = managerService.findAll();
+        Iterable<StockManager> responseBody = managerService.findAll();
 
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }

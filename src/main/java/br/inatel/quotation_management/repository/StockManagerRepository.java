@@ -1,9 +1,9 @@
 package br.inatel.quotation_management.repository;
 
-import br.inatel.quotation_management.model.Manager;
+import br.inatel.quotation_management.model.StockManager;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ManagerRepository extends CrudRepository<Manager, String> {
+public interface StockManagerRepository extends CrudRepository<StockManager, String> {
 }

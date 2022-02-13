@@ -1,8 +1,8 @@
 package br.inatel.quotation_management.data;
 
 import br.inatel.quotation_management.exception.QMException;
-import br.inatel.quotation_management.model.Manager;
-import br.inatel.quotation_management.service.ManagerService;
+import br.inatel.quotation_management.model.StockManager;
+import br.inatel.quotation_management.service.StockManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -15,17 +15,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DataLoader implements ApplicationRunner {
 
-    private final ManagerService managerService;
+    private final StockManagerService stockManagerService;
 
     @Override
     public void run(ApplicationArguments args) {
 
-        List<Manager> stockQuotes = Arrays.asList(
-                Manager.builder()
+        List<StockManager> stockQuotes = Arrays.asList(
+                StockManager.builder()
                         .id("petr3")
                         .description("test petr")
                         .build(),
-                Manager.builder()
+                StockManager.builder()
                         .id("vale5")
                         .description("test vale")
                         .build()
@@ -33,7 +33,7 @@ public class DataLoader implements ApplicationRunner {
 
         stockQuotes.forEach(s -> {
             try {
-                managerService.create(s);
+                stockManagerService.create(s);
             } catch (QMException ignored) {
             }
         });
