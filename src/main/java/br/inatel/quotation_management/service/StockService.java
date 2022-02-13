@@ -12,16 +12,33 @@ import java.util.Optional;
 public class StockService {
 
     private final StockRepository quoteRepository;
+    private final ManagerService managerService;
 
-    public Stock create(Stock stock) {
-        return quoteRepository.save(stock);
+    public Optional<Stock> create(Stock stock) {
+
+        boolean stockNotExists =
+                quoteRepository.findById(stock.getId()).isEmpty()
+                && findByStockId(stock.getStockId()).isEmpty();
+
+        boolean allowedToCreate =
+                managerService.existsByStockId(stock.getStockId());
+
+        Optional<Stock> response = Optional.empty();
+
+        if (stockNotExists && allowedToCreate) {
+            response = Optional.of(quoteRepository.save(stock));
+        }
+
+        return response;
     }
 
     public Optional<Stock> findByStockId(String stockId) {
+
         return quoteRepository.findByStockId(stockId);
     }
 
     public Iterable<Stock> findAll() {
+
         return quoteRepository.findAll();
     }
 }

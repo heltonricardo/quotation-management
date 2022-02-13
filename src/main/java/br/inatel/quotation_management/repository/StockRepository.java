@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface StockRepository extends CrudRepository<Stock, String> {
+
     Optional<Stock> findByStockId(String stockId);
 }
