@@ -10,31 +10,33 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class StockManagerService {
 
-    private final StockManagerRepository managerRepository;
+    private final StockManagerRepository stockManagerRepository;
 
-    public void create(StockManager manager) throws AlreadyExistsException {
+    public void create(StockManager stockManager)
+            throws AlreadyExistsException {
 
-        boolean managerAlreadyExists = existsByStockQuoteId(manager.getId());
+        boolean stockManagerAlreadyExists =
+                existsByStockId(stockManager.getId());
 
-        if (managerAlreadyExists) {
+        if (stockManagerAlreadyExists) {
             throw new AlreadyExistsException();
         }
 
-        managerRepository.save(manager);
+        stockManagerRepository.save(stockManager);
     }
 
     public Iterable<StockManager> findAll() {
 
-        return managerRepository.findAll();
+        return stockManagerRepository.findAll();
     }
 
-    public boolean existsByStockQuoteId(String stockQuoteId) {
+    public boolean existsByStockId(String stockId) {
 
-        return managerRepository.existsById(stockQuoteId);
+        return stockManagerRepository.existsById(stockId);
     }
 
     public boolean notExistsByStockQuoteId(String stockQuoteId) {
 
-        return !existsByStockQuoteId(stockQuoteId);
+        return !existsByStockId(stockQuoteId);
     }
 }

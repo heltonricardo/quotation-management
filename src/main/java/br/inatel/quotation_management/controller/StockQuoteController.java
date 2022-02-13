@@ -53,7 +53,7 @@ public class StockQuoteController {
             @PathVariable String stockId) {
 
         Optional<StockQuote> responseBody =
-                stockQuoteService.findByStockQuoteId(stockId);
+                stockQuoteService.findByStockId(stockId);
 
         if (responseBody.isPresent()) {
             return new ResponseEntity<>(responseBody, HttpStatus.OK);
